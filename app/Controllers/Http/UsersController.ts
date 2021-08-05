@@ -1,6 +1,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import User from 'App/Models/User';
 import CreateUser from 'App/Validators/CreateUserValidator';
+import LoginUser from 'App/Validators/LoginUserValidator';
 
 export default class UsersController {
     public async register({ request, response }: HttpContextContract) {
@@ -25,6 +26,20 @@ export default class UsersController {
             status: 'success',
             data: user,
             message: 'User registered successfully'
+        }
+    }
+
+    public async login({ auth, request }: HttpContextContract) {
+        const { email, password } = await request.validate(LoginUser);
+        const token = await auth.use('api').attempt(email, password)
+
+        if (auth.user) {
+            return {
+                status: 'success',
+                data: auth.user,
+                access_token: token,
+                message: 'User login successful'
+            }
         }
     }
 }
