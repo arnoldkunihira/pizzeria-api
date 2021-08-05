@@ -31,7 +31,7 @@ export default class UsersController {
 
     public async login({ auth, request }: HttpContextContract) {
         const { email, password } = await request.validate(LoginUser);
-        const token = await auth.use('api').attempt(email, password)
+        const token = await auth.use('api').attempt(email, password);
 
         if (auth.user) {
             return {
@@ -40,6 +40,15 @@ export default class UsersController {
                 access_token: token,
                 message: 'User login successful'
             }
+        }
+    }
+
+    public async logout({ auth }: HttpContextContract) {
+        await auth.use('api').revoke();
+        auth.use('api').isLoggedOut
+
+        return {
+            message: 'You have successfully logged out'
         }
     }
 }
