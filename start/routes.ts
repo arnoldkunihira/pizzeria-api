@@ -25,7 +25,9 @@ Route.get('/', async () => {
 });
 
 Route.group(() => {
+    
     //User Authentication
     Route.post('/register', 'UsersController.register');
-    
+    Route.post('/login', 'UsersController.login');
+
 }).prefix('api');
