@@ -42,4 +42,13 @@ export default class UsersController {
             }
         }
     }
+
+    public async logout({ auth }: HttpContextContract) {
+        await auth.use('api').revoke();
+        auth.use('api').isLoggedOut;
+
+        return {
+            message: 'You have successfully logged out'
+        }
+    }
 }
