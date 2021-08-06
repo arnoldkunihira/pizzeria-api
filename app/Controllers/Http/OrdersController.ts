@@ -3,7 +3,16 @@ import Order from 'App/Models/Order';
 import CreateOrder from 'App/Validators/CreateOrderValidator';
 
 export default class OrdersController {
-    public async index({}: HttpContextContract) {}
+    public async index({}: HttpContextContract) {
+        const orders = await Order.query().preload('product');
+
+        return {
+            status: 'success',
+            data: orders,
+            message: 'Orders retrieved successfully'
+        }
+
+    }
 
     public async create({}: HttpContextContract) {}
 
