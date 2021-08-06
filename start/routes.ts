@@ -41,5 +41,8 @@ Route.group(() => {
         Route.patch('/products/:id', 'ProductsController.update');
         Route.delete('/products/:id', 'ProductsController.destroy');
 
+        //Orders
+        Route.post('/orders', 'OrdersController.store');
+
     }).middleware('auth:api');
 }).prefix('api');

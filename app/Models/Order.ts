@@ -7,7 +7,7 @@ export default class Order extends BaseModel {
     public id: number;
 
     @column()
-    public productId: number
+    public productId: number;
 
     @column()
     public quantity: number;
