@@ -35,6 +35,7 @@ Route.group(() => {
         Route.post('/logout', 'UsersController.logout');
 
         //Pizza types
+        Route.get('/pizzas', 'PizzaTypesController.index');
         Route.post('/pizzas', 'PizzaTypesController.store');
 
     }).middleware('auth:api');
