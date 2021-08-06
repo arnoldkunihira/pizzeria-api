@@ -1,6 +1,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import PizzaType from 'App/Models/PizzaType';
 import StorePizza from 'App/Validators/StorePizzaValidator';
+import UpdatePizza from 'App/Validators/UpdatePizzaValidator';
 
 export default class PizzaTypesController {
     public async index({}: HttpContextContract) {
@@ -12,8 +13,6 @@ export default class PizzaTypesController {
             message: 'Pizzas retrieved successfully'
         }
     }
-
-    public async create({}: HttpContextContract) {}
 
     public async store({ request, response }: HttpContextContract) {
         const pizzaType = new PizzaType();
@@ -55,9 +54,27 @@ export default class PizzaTypesController {
         }
     }
 
-    public async edit({}: HttpContextContract) {}
+    public async update({ params, request }: HttpContextContract) {
+        const pizzaType = await PizzaType.findOrFail(params.id);
+        const payload = await request.validate(UpdatePizza);
 
-    public async update({}: HttpContextContract) {}
+        pizzaType.name = payload.name;
+        pizzaType.price = payload.price;
+        pizzaType.save();
+
+        if (!pizzaType.$isPersisted) {
+            return {
+                status: 'fail',
+                message: 'Failed to update pizza type'
+            }
+        }
+
+        return {
+            status: 'success', 
+            data: pizzaType,
+            message: 'Pizza type updated successfully'
+        }
+    }
 
     public async destroy({}: HttpContextContract) {}
 }
