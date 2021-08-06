@@ -76,5 +76,21 @@ export default class PizzaTypesController {
         }
     }
 
-    public async destroy({}: HttpContextContract) {}
+    public async destroy({ params }: HttpContextContract) {
+        const pizzaType = await PizzaType.find(params.id);
+
+        if (!pizzaType?.$isPersisted) {
+            return {
+                status: 'fail',
+                message: 'Failed to delete pizza type whose id is ' + params.id
+            }
+        }
+
+        await pizzaType.delete();
+
+        return {
+            status: 'success',
+            message: 'Pizza type deleted successfully'
+        }
+    }
 }
