@@ -34,12 +34,12 @@ Route.group(() => {
 
         Route.post('/logout', 'UsersController.logout');
 
-        //Pizza types
-        Route.get('/pizzas', 'PizzaTypesController.index');
-        Route.post('/pizzas', 'PizzaTypesController.store');
-        Route.get('/pizzas/:id', 'PizzaTypesController.show');
-        Route.patch('/pizzas/:id', 'PizzaTypesController.update');
-        Route.delete('/pizzas/:id', 'PizzaTypesController.destroy');
+        //Products
+        Route.get('/products', 'ProductsController.index');
+        Route.post('/products', 'ProductsController.store');
+        Route.get('/products/:id', 'ProductsController.show');
+        Route.patch('/products/:id', 'ProductsController.update');
+        Route.delete('/products/:id', 'ProductsController.destroy');
 
     }).middleware('auth:api');
 }).prefix('api');
