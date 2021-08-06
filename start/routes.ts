@@ -42,6 +42,7 @@ Route.group(() => {
         Route.delete('/products/:id', 'ProductsController.destroy');
 
         //Orders
+        Route.get('/orders', 'OrdersController.index');
         Route.post('/orders', 'OrdersController.store');
 
     }).middleware('auth:api');
