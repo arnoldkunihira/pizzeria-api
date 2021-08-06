@@ -18,8 +18,22 @@
 |
 */
 
-import Route from '@ioc:Adonis/Core/Route'
+import Route from '@ioc:Adonis/Core/Route';
 
 Route.get('/', async () => {
-  return { hello: 'world' }
-})
+  return { hello: 'Diwala' };
+});
+
+Route.group(() => {
+
+    //User Authentication
+    Route.post('/register', 'UsersController.register');
+    Route.post('/login', 'UsersController.login');
+
+    //All routes in here need a bearer-token otherwise there will be unauthorized access
+    Route.group(() => {
+        Route.post('/logout', 'UsersController.logout');
+        
+    }).middleware('auth:api');
+
+}).prefix('api');
