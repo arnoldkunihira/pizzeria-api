@@ -24,7 +24,7 @@ export default class PizzaTypesController {
         await pizzaType.save();
         response.status(201);
 
-        if (!pizzaType.$isPersisted){
+        if (!pizzaType.$isPersisted) {
             return {
                 status: 'fail',
                 message: 'Failed to create new pizza'
@@ -38,7 +38,22 @@ export default class PizzaTypesController {
         }
     }
 
-    public async show({}: HttpContextContract) {}
+    public async show({ params }: HttpContextContract) {
+        const pizzaType = await PizzaType.find(params.id);
+
+        if (!pizzaType?.$isPersisted) {
+            return {
+                status: 'fail',
+                message: 'Failed to retrieve pizza type whose id is ' + params.id
+            }
+        }
+
+        return {
+            status: 'success',
+            data: pizzaType,
+            message: 'Pizza type retrieved successfully'
+        }
+    }
 
     public async edit({}: HttpContextContract) {}
 
