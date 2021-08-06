@@ -38,6 +38,7 @@ Route.group(() => {
         Route.get('/pizzas', 'PizzaTypesController.index');
         Route.post('/pizzas', 'PizzaTypesController.store');
         Route.get('/pizzas/:id', 'PizzaTypesController.show');
+        Route.patch('/pizzas/:id', 'PizzaTypesController.update');
 
     }).middleware('auth:api');
 }).prefix('api');
