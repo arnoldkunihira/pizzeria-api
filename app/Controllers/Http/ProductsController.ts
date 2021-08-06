@@ -50,7 +50,7 @@ export default class ProductsController {
         return {
             status: 'success',
             data: product,
-            message: 'Product type retrieved successfully'
+            message: 'Product retrieved successfully'
         }
     }
 
