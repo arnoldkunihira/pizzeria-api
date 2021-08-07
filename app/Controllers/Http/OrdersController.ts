@@ -2,6 +2,7 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import Database from '@ioc:Adonis/Lucid/Database';
 import Order from 'App/Models/Order';
 import CreateOrder from 'App/Validators/CreateOrderValidator';
+import UpdateOrder from 'App/Validators/UpdateOrderValidator';
 
 export default class OrdersController {
     public async index({}: HttpContextContract) {
@@ -76,7 +77,26 @@ export default class OrdersController {
 
     public async edit({}: HttpContextContract) {}
 
-    public async update({}: HttpContextContract) {}
+    public async update({ params, request }: HttpContextContract) {
+        const order = await Order.findOrFail(params.id); 
+        const payload = await request.validate(UpdateOrder);
+
+        order.quantity = payload.quantity;
+        order.save();
+
+        if (!order.$isPersisted) {
+            return {
+                status: 'fail',
+                message: 'Failed to update product'
+            }
+        }
+
+        return {
+            status: 'success', 
+            data: order,
+            message: 'Order updated successfully'
+        }
+    }
 
     public async destroy({}: HttpContextContract) {}
 }
