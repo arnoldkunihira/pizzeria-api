@@ -98,5 +98,21 @@ export default class OrdersController {
         }
     }
 
-    public async destroy({}: HttpContextContract) {}
+    public async destroy({ params }: HttpContextContract) {
+        const order = await Order.find(params.id);
+
+        if (!order?.$isPersisted) {
+            return {
+                status: 'fail',
+                message: 'Failed to delete order whose id is ' + params.id
+            }
+        }
+
+        await order.delete();
+
+        return {
+            status: 'success',
+            message: 'Order deleted successfully'
+        }
+    }
 }
