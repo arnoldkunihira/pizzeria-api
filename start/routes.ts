@@ -46,6 +46,7 @@ Route.group(() => {
         Route.post('/orders', 'OrdersController.store');
         Route.get('/orders/:id', 'OrdersController.show');
         Route.patch('/orders/:id', 'OrdersController.update');
+        Route.delete('/orders/:id', 'OrdersController.destroy');
 
     }).middleware('auth:api');
 }).prefix('api');
