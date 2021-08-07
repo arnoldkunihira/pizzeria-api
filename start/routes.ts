@@ -44,6 +44,7 @@ Route.group(() => {
         //Orders
         Route.get('/orders', 'OrdersController.index');
         Route.post('/orders', 'OrdersController.store');
+        Route.get('/orders/:id', 'OrdersController.show');
 
     }).middleware('auth:api');
 }).prefix('api');
