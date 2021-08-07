@@ -27,8 +27,6 @@ export default class OrdersController {
         }
     }
 
-    public async create({}: HttpContextContract) {}
-
     public async store({ request }) {
         const order = new Order();
         const payload = await request.validate(CreateOrder);
@@ -74,8 +72,6 @@ export default class OrdersController {
             message: 'Order retrieved successfully'
         }
     }
-
-    public async edit({}: HttpContextContract) {}
 
     public async update({ params, request }: HttpContextContract) {
         const order = await Order.findOrFail(params.id); 
