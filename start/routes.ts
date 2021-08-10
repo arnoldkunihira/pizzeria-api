@@ -21,19 +21,32 @@
 import Route from '@ioc:Adonis/Core/Route';
 
 Route.get('/', async () => {
-  return { hello: 'Diwala' };
+    return { hello: 'Diwala' };
 });
 
 Route.group(() => {
-
     //User Authentication
     Route.post('/register', 'UsersController.register');
     Route.post('/login', 'UsersController.login');
 
     //All routes in here need a bearer-token otherwise there will be unauthorized access
     Route.group(() => {
-        Route.post('/logout', 'UsersController.logout');
-        
-    }).middleware('auth:api');
 
+        Route.post('/logout', 'UsersController.logout');
+
+        //Products
+        Route.get('/products', 'ProductsController.index');
+        Route.post('/products', 'ProductsController.store');
+        Route.get('/products/:id', 'ProductsController.show');
+        Route.patch('/products/:id', 'ProductsController.update');
+        Route.delete('/products/:id', 'ProductsController.destroy');
+
+        //Orders
+        Route.get('/orders', 'OrdersController.index');
+        Route.post('/orders', 'OrdersController.store');
+        Route.get('/orders/:id', 'OrdersController.show');
+        Route.patch('/orders/:id', 'OrdersController.update');
+        Route.delete('/orders/:id', 'OrdersController.destroy');
+
+    }).middleware('auth:api');
 }).prefix('api');
